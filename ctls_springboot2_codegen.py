@@ -64,6 +64,22 @@ def main(parser):
         print "期望的产品ID:", artifactRootName
         pass
 
+    # 解压模板文件
+    demoZipfile = os.path.join(abspath, "demo.zip")
+    if not util.file_exists(demoZipfile):
+        print "ERROR 模板文件不存在", demoZipfile
+        exit(-1)
+
+    demoRootDir = os.path.join(abspath, "build", "tmp", "demo")
+    if util.dir_exists(demoRootDir):
+        shutil.rmtree(demoRootDir)
+        pass
+
+    util.unzip_file(demoZipfile, demoRootDir)
+    if not util.dir_exists(demoRootDir):
+        print "ERROR 模板路径不存在", demoRootDir
+        exit(-1)
+
     if not options.forceUpdate:
         create_artifact(
             artifactRoot = artifactRoot,
@@ -79,6 +95,8 @@ def main(parser):
         print "当前不支持!"
         pass
 
+    # 使用完毕删除模板
+    shutil.rmtree(demoRootDir)
     pass
 
 

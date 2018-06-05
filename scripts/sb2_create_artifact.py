@@ -1,13 +1,13 @@
 #!/usr/bin/python
 #-*- coding: UTF-8 -*-
 #
-# @file:
+# @file: sb2_create_artifact.py
 #
 #   创建新产品
 #
-# @version: 0.0.1
-# @create: $create$
-# @update:
+# @version: 2018-06-05 18:08:36
+# @create: 2018-06-05 18:08:36
+# @update: 2018-06-05 18:08:36
 #
 #######################################################################
 import os

@@ -17,7 +17,7 @@ _name=$(basename $_file)
 
 #######################################################################
 
-$_cdir/utils/updt.py \
+$_cdir/updt.py \
     --path=$_cdir/scripts \
     --filter="python" \
     --author="master@pepstack.com" \
