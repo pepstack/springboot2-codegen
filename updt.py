@@ -9,7 +9,7 @@
 #
 # @version: 1.0.0
 # @create: 2018-05-18 14:00:00
-# @update: 2018-06-01
+# @update: 2018-06-12
 #
 #######################################################################
 import os, sys, stat, signal, shutil, inspect, commands, time, datetime
@@ -99,30 +99,35 @@ def sweep_path(path, file_exts, recursive, author, curtime):
     filelist.sort(key=lambda x:x[0:20])
 
     for f in filelist:
-        pf = os.path.join(path, f)
+        try:
+            pf = os.path.join(path, f)
 
-        fs = os.stat(pf)
-        mod = fs.st_mode
+            fs = os.stat(pf)
+            
+            mod = fs.st_mode
 
-        if stat.S_ISDIR(mod):
-            # is dir
-            if util.dir_exists(pf):
-                if recursive:
-                    sweep_path(pf, file_exts, recursive, author, curtime)
-                    pass
-            pass
-        elif stat.S_ISREG(mod):
-            # is file
-            ignored = False
+            if stat.S_ISDIR(mod):
+                # is dir
+                if util.dir_exists(pf):
+                    if recursive:
+                        sweep_path(pf, file_exts, recursive, author, curtime)
+                        pass
+                pass
+            elif stat.S_ISREG(mod):
+                # is file
+                ignored = False
 
-            if not util.file_exists(pf) or pf == APPFILE or f == "__init__.py":
-                ignored = True
+                if not util.file_exists(pf) or pf == APPFILE or f == "__init__.py":
+                    ignored = True
 
-            if not ignored:
-                _, ext = os.path.splitext(f)
-                if ext in file_exts:
-                    update_file(pf, f, fs, author, curtime)
-                    pass
+                if not ignored:
+                    _, ext = os.path.splitext(f)
+                    if ext in file_exts:
+                        update_file(pf, f, fs, author, curtime)
+                        pass
+        except OSError as e:
+            elog.warn("%r: %s" % (e, pf))
+        
     pass
 
 
